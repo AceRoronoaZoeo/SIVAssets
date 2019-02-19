@@ -820,7 +820,11 @@ a cite {
 
 .layui-body {
 	position: absolute;
+<<<<<<< HEAD
+	left: 230px;
+=======
 	left: 200px;
+>>>>>>> 93774cd370d146d424dec7b881f03bb85b5f83fa
 	right: 0;
 	top: 0;
 	bottom: 0;
@@ -842,7 +846,11 @@ a cite {
 
 .layui-layout-admin .layui-side {
 	top: 60px;
+<<<<<<< HEAD
+	width: 230px;
+=======
 	width: 200px;
+>>>>>>> 93774cd370d146d424dec7b881f03bb85b5f83fa
 	overflow-x: hidden
 }
 
@@ -3622,12 +3630,19 @@ body .layui-table-tips .layui-layer-content {
 }
 
 .layui-nav-tree {
+<<<<<<< HEAD
+	width: 230px;
+=======
 	width: 200px;
+>>>>>>> 93774cd370d146d424dec7b881f03bb85b5f83fa
 	padding: 0
 }
 .layui-side{
 	padding-bottom: 108px;
+<<<<<<< HEAD
+=======
 	background: #333333;
+>>>>>>> 93774cd370d146d424dec7b881f03bb85b5f83fa
 }
 .layui-side::-webkit-scrollbar {/*滚动条整体样式*/
     width: 2px;     /*高宽分别对应横竖滚动条的尺寸*/

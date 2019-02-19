@@ -80,8 +80,13 @@ body::-webkit-scrollbar {/*滚动条整体样式*/
     background: #333;
 }
 .navIMG{
+<<<<<<< HEAD
+    width:28px;
+    height: 28px;
+=======
     width:24px;
     height: 24px;
+>>>>>>> 93774cd370d146d424dec7b881f03bb85b5f83fa
     margin-right: 23px;
 }
 .navTitle{
@@ -93,30 +98,50 @@ body::-webkit-scrollbar {/*滚动条整体样式*/
     bottom: 0;
     background: #2C2C2C;
     z-index: 100;
+<<<<<<< HEAD
+    width: 230px;
+=======
     width: 200px;
+>>>>>>> 93774cd370d146d424dec7b881f03bb85b5f83fa
 }
 .s-top{
     border-bottom:1px solid #bbb;
     display: flex;
 }
 .s-top-left{
+<<<<<<< HEAD
+    width: 48px;
+=======
     width: 30px;
+>>>>>>> 93774cd370d146d424dec7b881f03bb85b5f83fa
 }
 .s-top-left img{
     width: 100%;
     margin: 11px;
 }
 .s-top-right p{
+<<<<<<< HEAD
+    font-size: 12px;
+=======
     font-size: 10px;
+>>>>>>> 93774cd370d146d424dec7b881f03bb85b5f83fa
     color: #A2A7AB;
     padding-left: 15px;
 }
 .s-top-right p:first-child{
+<<<<<<< HEAD
+    font-size: 18px;
+    padding: 15px 0px 3px 15px;
+}
+.s-bottom p{
+    font-size: 12px;
+=======
     font-size: 16px;
     padding: 11px 0px 3px 16px;
 }
 .s-bottom p{
     font-size: 10px;
+>>>>>>> 93774cd370d146d424dec7b881f03bb85b5f83fa
     color: #A2A7AB;
     padding: 10px;
     text-align: center;

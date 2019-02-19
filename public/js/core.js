@@ -20,7 +20,11 @@ function GetNav(func) {
                 navImg:'image/leftnav/index.png',
                 navTitle:'首页',
                 navtype:0,
+<<<<<<< HEAD
                 pages:'tessthtml.html',
+=======
+                pages:'zichanGuanli/zichanRuku.html',
+>>>>>>> 93774cd370d146d424dec7b881f03bb85b5f83fa
                 id:0
             },
             {   
@@ -28,6 +32,7 @@ function GetNav(func) {
                 navTitle:'资产管理',
                 navtype:1,
                 navChaild:[
+<<<<<<< HEAD
                     {navName:'资产入库',pages:'tessthtml.html',type:1,id:1},
                     {navName:'出库领用',pages:'tessthtml.html',type:1,id:2}, 
                     {navName:'资产转移',pages:'tessthtml.html',type:1,id:3},
@@ -37,6 +42,17 @@ function GetNav(func) {
                     {navName:'资产盘点',pages:'tessthtml.html',type:1,id:5},
                     {navName:'分析报表',pages:'tessthtml.html',type:1,id:5},
                     {navName:'操作记录',pages:'tessthtml.html',type:1,id:5},
+=======
+                    {navName:'资产入库',pages:'zichanGuanli/zichanRuku.html',type:1,id:1},
+                    {navName:'出库领用',pages:'tessthtml.html',type:1,id:2}, 
+                    {navName:'资产转移',pages:'tessthtml.html',type:1,id:3},
+                    {navName:'资产退库',pages:'tessthtml.html',type:1,id:4},
+                    {navName:'资产维修',pages:'tessthtml.html',type:1,id:6},
+                    {navName:'资产报废',pages:'tessthtml.html',type:1,id:7},
+                    {navName:'资产盘点',pages:'tessthtml.html',type:1,id:8},
+                    {navName:'分析报表',pages:'tessthtml.html',type:1,id:9},
+                    {navName:'操作记录',pages:'tessthtml.html',type:1,id:10},
+>>>>>>> 93774cd370d146d424dec7b881f03bb85b5f83fa
                     
                 ]
             },

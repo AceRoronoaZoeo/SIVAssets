@@ -57,7 +57,18 @@ layui.use(['element', 'laytpl'], function() {
         } else {
             alert('超出打开页面上限');
         }
+<<<<<<< HEAD
         $(this).find('img').attr('src', 'image/leftnav/indexx.png');
+=======
+        console.log(dataid.attr("data-id"))
+        if (dataid.attr("data-id") == 0) {
+            $(this).find('img').attr('src', 'image/leftnav/indexx.png');
+        }
+        else{
+            $(".site-demo-active").eq(0).find('img').attr('src', 'image/leftnav/index.png');
+        }
+        
+>>>>>>> 93774cd370d146d424dec7b881f03bb85b5f83fa
     });
 });
 

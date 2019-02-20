@@ -1,0 +1,221 @@
+.materielClassifyTitle{
+	background:#fff;
+	padding:16px;
+	box-sizing:border-box;
+	margin-bottom:24px;
+}
+.addBtn{
+	width: 148px;
+	line-height: 48px;
+	border-radius: 10px;
+	text-align: center;
+	border: 1px solid rgba(220, 220, 220, 1);
+	font-size:20px;
+	color: rgba(102, 102, 102, 1);
+	font-family: SourceHanSansSC-regular;
+	background:unset;
+}
+.addBtn:hover{
+	color:#00CCFF;
+	border-color:#00CCFF;
+	cursor: pointer;
+}
+.materielClassifyContent{
+	display:flex;
+	justify-content: space-between;
+}
+.materielClassifyContentLeft{
+	width:413px;
+}
+
+
+
+/*新增 弹窗*/
+.addPopupfixed{
+	background:rgba(0,0,0,0.5);
+	position:fixed;
+	top:0;
+	left:0;
+	width:100%;
+	height:100%;
+}
+.addPopupfixed > .p-relativecont{
+	position:absolute;
+	left: 605px;
+	top: 114px;
+	width: 648px;
+	border-radius: 10px 10px 10px 10px;
+	background-color: rgba(255, 255, 255, 1);
+	color: rgba(80, 80, 80, 1);
+	font-size: 14px;
+	box-shadow: 0px 0px 0px 0px rgba(170, 170, 170, 1);
+	font-family: Roboto;
+	padding: 30px 30px 20px;
+	box-sizing:border-box;
+	border: 1px solid rgba(204, N204, 204, 1);	
+}
+.addClassifyTitle{
+	line-height:height: 27px;
+	color: rgba(80, 80, 80, 1);
+	font-size: 18px;
+	font-family: SourceHanSansSC-bold;
+	margin-bottom:16px;
+}
+.p-title{
+    width: 90px;
+    display: inline-block;
+    text-align: right;
+}
+.p-title:before{
+	content:"*";
+	color:red;
+	margin-right:5px; 
+}
+.p-item ,.p-container{
+	display:flex;
+	justify-content: space-around;
+	align-items:center;
+	flex-wrap:wrap;
+}
+.p-item{
+	margin-bottom:20px;
+}
+.p-item input{
+	width: 393px;
+	border-radius: 6px 6px 6px 6px;
+	background-color: rgba(255, 255, 255, 1);
+	color: rgba(80, 80, 80, 1);
+	font-size: 14px;
+	font-family: Roboto;
+	border: 1px solid rgba(204, 204, 204, 1);
+    padding: 0 16px !important;
+    box-sizing: border-box;
+    height:38px;
+    outline: none;
+}
+.btnBox{
+	display:flex;
+	justify-content: center;
+	align-items: center;
+	margin-top:20px;
+}
+.btnBox a{
+	width:112px;
+	height:40px;
+	line-height:40px;
+	text-align: center;
+	border-radius: 6px 6px 6px 6px;
+	font-size: 12px;
+	font-family: Roboto;
+	margin:0 10px;
+}
+.save{
+	background-color: rgba(34, 180, 249, 1);
+	color: rgba(16, 16, 16, 1);
+	border: 1px solid rgba(255, 255, 255, 0);
+}
+.cancle{
+	color: #666;
+	border: 1px solid rgba(187, 187, 187, 1);
+	background-color:#fff;
+}
+.save:hover{
+	background-color: rgba(72, 196, 255, 1);
+	color: #fff;
+}
+.cancle:hover{
+	background-color: rgba(232, 246, 254, 1);
+	color: rgba(16, 16, 16, 1);
+	border: 1px solid rgba(72, 196, 255, 1);
+}
+.materielClassifyContentRight{
+	width:100%;
+	background: #fff;
+}
+.materielClassifyContentRight thead tr{
+	background-color:unset;
+}
+.materielClassifyContentRight th{
+	line-height: 40px;
+	color: rgba(51, 51, 51, 1);
+	font-size: 18px;
+	font-family: SourceHanSansSC-regular;
+	width:25%;
+	text-align: center;
+	border:0;
+	padding:0;
+    height: 60px;
+}
+.materielClassifyContentRight td{
+	line-height:60px;
+	padding:0;
+	color: rgba(16, 16, 16, 1);
+	font-size: 16px;
+	text-align: center;
+	box-shadow: 0px -1px 0px 0px rgba(204, 204, 204, 1);
+	font-family: Roboto;
+	border-top: 1px solid rgba(255, 255, 255, 0);
+	border-bottom: 1px solid rgba(255, 255, 255, 0);
+	border-left:0;
+	border-right:0;
+}
+.materielClassifyContentRight td:last-child{
+	border-bottom:0;
+}
+.update , .del{
+	width: 74px;
+	line-height: 36px;
+	border-radius: 10px 10px 10px 10px;
+	text-align: center;
+	border: 1px solid rgba(255, 255, 255, 0);
+	padding:0;
+	height:36px;
+	font-size:16px;
+}
+.update{
+	background-color: rgba(1, 186, 242, 1);
+}
+.del{
+	background-color: rgba(255, 84, 90, 1);
+}
+input::-webkit-input-placeholder{
+  font-size: 14px;
+  transform: translate(0, 2px);
+}
+.focusClass {
+    border-color: red !important;
+}
+.inputBox{
+	margin-left:16px;
+	position:relative;
+}
+.inputBox a{
+	position:absolute;
+	top: 50%;
+    transform: translateY(-36%);
+    font-size:14px;
+}
+.layui-icon-down{
+	right:10px;
+}
+.layui-icon-close{
+	right: 30px;
+    font-size: 14px !important;
+}
+.changeDeg{
+	transform:rotate(180deg);
+}
+/*.p-item:nth-of-type(3) .inputBox:before{
+	content:"123";
+	position:absolute;
+	top:50%;
+	transform:translateY(-50%);
+	right:30px;
+}
+.p-item:nth-of-type(3) .inputBox:after{
+	content:"";
+	position:absolute;
+	top:50%;
+	transform:translateY(-50%);
+	right:10px;
+}*/

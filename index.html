@@ -27,7 +27,7 @@
     <!-- header -->
     <div class="layui-header header header-demo" style="background: #393d49;">
       <div class="layui-main dis-head" style="margin: 0px 5px;">
-        <a href="javascript:;" class="logo"><img src="image/useAssets.png" alt=""></a>
+        <a href="javascript:;" class="logo"><img src="image/tf_logo.png" alt=""></a>
         <div class="dis-head">
           <label class="company-name">天峰酷钉科技有限公司</label>
           <a href="javascript:;" class="layui-btn layui-btn-warm layui-btn-xs">已认证</a>
@@ -43,7 +43,7 @@
             <a href="javascript:;" :data-isrc="3" v-on:click="changeIframeSrc"><i class="layui-icon">&#xe60a;</i>使用指南</a>
           </li>
           <li class="layui-nav-item">
-            <a href="javascript:;" :data-isrc="4" v-on:click="changeIframeSrc"><img src="image/topnav/phone.png" alt="">电话咨询:40019388434</a>
+            <a href="javascript:;" :data-isrc="4" v-on:click="changeIframeSrc"><img src="image/phone.png" alt="">电话咨询:40019388434</a>
           </li>
           <li class="layui-nav-item">
             <a href="javascript:;" :data-isrc="5" v-on:click="changeIframeSrc"><i class="layui-icon">&#xe66f;</i>用户账户</a>
@@ -57,10 +57,10 @@
         </ul>
         <div class="asid-fooder dis-head asid-column jc-center">
           <div class="dis-head af-top">
-            <div style="flex: 1"><img src="image/系统/首页/导航栏/客服.png" width="48" alt=""></div>
+            <div style="flex: 1"><img src="image/kefu.png" width="48" alt=""></div>
             <div style="flex: 1">
               <div class="cust-help">客户支持</div>
-              <div class="call-me">电话咨询:40018374844</div>
+              <div class="call-me" style="margin: 0">电话咨询:40018374844</div>
             </div> 
           </div>
 
@@ -113,8 +113,8 @@
             },
             iframeSrc:'ChildFrameHTML/home.html',//默认页面
             nav:[
-              { name:'首页', icon:'', src:'ChildFrameHTML/home.html',id:0, child:[]},
-              { name:'资产管理', icon:'', src:'test',id:1, 
+              { name:'首页', icon:'image/home.png', src:'ChildFrameHTML/home.html',id:0, child:[]},
+              { name:'资产管理', icon:'image/moneyMa.png', src:'test',id:1, 
                 child:[
                   {name:'酒店餐饮',src:'test',id:2,child:[]},
                   {name:'交通运输',src:'test',id:3,
@@ -144,7 +144,7 @@
                   {name:'酒吧KTV',src:'test',id:6,child:[]},
                   {name:'煤矿金属',src:'test',id:7,child:[]}
               ]},
-              { name:'系统设置', icon:'', src:'test',id:8, 
+              { name:'系统设置', icon:'image/set.png', src:'test',id:8, 
                 child:[
                   {name:'音频设置',src:'test',id:9,child:[]},
                   {name:'音频设置',src:'test',id:10,
@@ -160,6 +160,9 @@
           },
           created:function(){
             this.getNav(this.nav);
+            // alert(document.location.href)
+            // console.log(123)
+            console.log(document.location.href)
             // console.log(this.navstr)
           },
           mounted:function(){
@@ -182,13 +185,13 @@
                 liEle.className = 'layui-nav-item';
                 // let item = '<a href="javascript" data-isrc="'+arr[i].src+'" data-id="'+arr[i].id+'">arr[i].name</a>';
                 if(arr[i].child.length!=0){
-                  liEle.innerHTML = '<a href="javascript:;" data-isrc="'+arr[i].src+'" data-id="'+arr[i].id+'"><img src="'++'"/>'+arr[i].name+'</a>';  
+                  liEle.innerHTML = '<a href="javascript:;" data-isrc="'+arr[i].src+'" data-id="'+arr[i].id+'"><img src="'+arr[i].icon+'" width="20" style="margin-right:15px;"/>'+arr[i].name+'</a>';  
                   var lisDlEle = document.createElement('dl');
                   lisDlEle.className = 'layui-nav-child';
                   this.getNavChild(arr[i].child,lisDlEle);
                   liEle.appendChild(lisDlEle);
                 }else{
-                  liEle.innerHTML = '<a href="javascript:;" data-isrc="'+arr[i].src+'" data-id="'+arr[i].id+'" class="linkFrame">'+arr[i].name+'</a>';
+                  liEle.innerHTML ='<a href="javascript:;" data-isrc="'+arr[i].src+'" data-id="'+arr[i].id+'" class="linkFrame"><img src="'+arr[i].icon+'" width="20" style="margin-right:15px;"/>'+arr[i].name+'</a>';
                 }
                 // console.log(liEle.innerHTML)
                 this.navstr+=this.domToString(liEle);

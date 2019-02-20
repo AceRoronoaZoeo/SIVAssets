@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>物料分类</title>
+    <meta charset="utf-8">
+    <!-- 360极速模式 -->
+    <meta name="renderer" content="webkit">
+    <!-- 最新ie和谷歌优先渲染 -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <!-- 为移动设备添加 viewport -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <!-- 禁止缓存 -->
+    <meta http-equiv=”pragma” content=”no-cache”>
+    <meta http-equiv=”cache-control” content=”no-cache”>
+    <meta http-equiv=”expires” content=”0″>
+    
+    <link rel="stylesheet" href="../layui/css/layui.css" media="all">
+    <link rel="stylesheet" href="../css/home.css" media="all">
+    <link rel="stylesheet" href="../css/media.css" media="all">
+    <link rel="stylesheet" href="../css/materielClassify.css" media="all">
+</head>
+
+<body>
+    <div id="app">
+    	<div class="materielClassifyTitle">
+    		<button class="addBtn" @click="addFn">新建分类</button>
+    	</div>
+    	<div class="materielClassifyContent">
+    		<div class="materielClassifyContentLeft">
+				<ul class="treeModel"></ul>
+    		</div>
+    		<div class="materielClassifyContentRight">
+				<table class="layui-table">
+                    <thead>
+                        <tr>
+                            <th v-for="(item,index) in thData" :key="index">{{item}}</th>
+                        </tr>
+                    </thead>
+                    <tbody v-if="tbody">
+                        <tr v-for="(item,index) in tbody" :key="index">
+                            <td v-for="(childItem , childIndex) in item" :key="childIndex" v-show="childIndex!=3">{{childItem}}</td>
+                            <td>
+                                <a href="javascript:;" class="layui-btn layui-btn-sm layui-btn-warm update" @click="upTheData(index)">修改</a>
+                                <a href="javascript:;" class="layui-btn layui-btn-sm layui-btn-danger del" @click="delData(index)">删除</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                    <tbody v-else>
+                    	<tr>
+                        	<td colspan="10" style="text-align: center;">暂时没有数据</td>
+                        </tr>
+                    </tbody>
+                </table>		
+    		</div>
+    	</div>
+		<!-- 弹出层 -->
+		<div class="addPopupfixed" v-show="addModuleBol">
+			<div class="p-relativecont">
+				<div class="layui-layer layui-layer-dialog p-absolutecont" v-if="clickType==0">
+					<div class="layui-layer-title addClassifyTitle">新增分类</div>
+					<form action="javascript:void 0;" name="form_addAllStaff" ref="formObj" class="formObj">
+						<div class="layui-layer-content">
+							<div class="p-container">
+								<div class="p-item" v-for="(item,index) in addPop" :key="index">
+									<span class="p-title">{{item.title}}</span>
+									<div class="inputBox">
+										<input type="text" :class="{focusClass:focusIndex==index}" @click="focusFn(index)" :placeholder="item.placeholder" name="item.name" v-model="item.mes"/>
+										<!--a href="javascript:;" class="layui-icon layui-icon-close" v-if="index==2&&item.mes" @click="delMesFn(index)"></a-->
+										<a href="javascript:;" class="layui-icon layui-icon-down" :class="{changeDeg:changeDeg}" v-if="index==2" @click="changeDeg"></a>
+										<!--ul v-if="index==&&item.hasOwnProperty('select')">
+											<li v-for="(selectItem,selectIndex) in select" :key="selectIndex" @click="slectFn(selectIndex)">{{selectItem}}</li>
+										</ul-->
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="layui-layer-btn layui-layer-btn-c btnBox">
+							<a class="save" href="javascript:;" @click="saveFn">保存</a>
+							<a class="cancle" href="javascript:;" @click="cancleFn">取消</a>
+						</div>
+					</form>
+				</div>
+
+
+				<div class="layui-layer layui-layer-dialog p-absolutecont" v-if="clickType==1">
+					<div class="layui-layer-title addClassifyTitle">编辑分类</div>
+					<form action="javascript:void 0;" name="form_addAllStaff" ref="formObj">
+						<div class="layui-layer-content">
+							<div class="p-container">
+								<div class="p-item" v-for="(item,index) in addPop" :key="index">
+									<span class="p-title">{{item.title}}</span>
+									<div class="inputBox">
+										<input type="text" :class="{focusClass:focusIndex==index}" @click="focusFn(index)" :placeholder="item.placeholder" name="item.name" v-model="item.mes"/>
+										<span class="uploadBt">	
+											<i class="layui-icon layui-icon-upload" style="font-size: 13px; color: #FFFFFF;"></i>
+										</span>
+										<!--ul v-if="index==&&item.hasOwnProperty('select')">
+											<li v-for="(selectItem,selectIndex) in select" :key="selectIndex" @click="slectFn(selectIndex)">{{selectItem}}</li>
+										</ul-->
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="layui-layer-btn layui-layer-btn-c btnBox">
+							<a class="save" href="javascript:;" @click="saveFn">保存</a>
+							<a class="cancle" href="javascript:;" @click="cancleFn">取消</a>
+						</div>
+					</form>
+				</div>				
+			</div>
+		</div>    	
+    </div>
+    <script type="text/javascript" src="../public/js/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="../layui/layui.js"></script>
+    <script type="text/javascript" src="../public/js/hou.js"></script>
+    <script type="text/javascript" src="../public/js/echarts.min.js"></script>
+    <script type="text/javascript" src="../public/js/vue.min.js"></script>
+	<script type="text/javascript">
+	let app=new Vue({
+        el:"#app",
+        data:{
+            screenWidth: document.body.clientWidth,
+            hou:new $Hou(),
+            formObj:"",
+           	addModuleBol:false,
+           	addPop:[
+           		{title:"分类编号：",mes:"",name:"number",placeholder:"请选择导航名称"},
+           		{title:"分类名称：",mes:"",name:"name",placeholder:"请选择导航名称"},
+           		{title:"上级分类：",mes:"",name:"lastClassify",placeholder:"请选择上级分类",select:["1"]},
+           		{title:"排序：",mes:"",name:"sort",placeholder:"排序"},
+           	],
+           	thData:["分类编号","分类名称","上级分类","操作"],
+           	tbody:[
+           		[1,2,3,4],
+           		[1,2,3,4],
+           	],
+           	clickType:-1,
+           	clickMes:"",
+           	focusIndex:-1,
+           	changeDeg:false,
+        },
+        methods:{   
+            addFn(e){
+            	this.clickType=0
+            	this.addModuleBol=true
+            },
+            focusFn(i){
+            	this.focusIndex=i
+            },
+            delMesFn(i){
+            	this.addPop[i].mes=""
+            },
+            changeDeg(){
+            	this.changeDeg=!this.changeDeg
+            },
+            cancleFn(){
+            	this.addModuleBol=false
+            	this.addPop.forEach((item,i)=>{
+            		item.mes=""
+            	})    	
+            },
+            saveFn(){
+            	var data=$("form[name=form_addAllStaff]").serialize();
+            	console.log(data)
+            	switch(this.clickType){
+            		case 0:
+            			break;
+            		case 1:
+            			break;
+            	}
+            },
+            upTheData(i){
+            	this.addFn();
+            	this.clickType=1;
+            	this.clickMes=this.tbody[i]
+            	console.log(this.clickMes)
+            	this.addPop.forEach((item,i)=>{
+            		item.mes=this.clickMes[i]
+            	})
+            },
+            delData(i){
+            	this.tbody.splice(i,1);
+            }
+        },
+        mounted(){
+            window.onresize = () => {
+                return (() => {
+                    window.screenWidth = document.body.clientWidth
+                    this.screenWidth = window.screenWidth
+                })()
+            }
+        }, 
+        watch:{
+            screenWidth (val) {
+                this.screenWidth = val;
+                window.location.reload();
+            }
+        },
+        created(){ 
+        	console.log(this.hou.getMethods())
+            /*layui.use(['tree', 'laypage', 'layer', 'laytpl','element','laydate'],function(){
+				let laypage = layui.laypage,
+				layer = layui.layer,
+				laytpl = layui.laytpl,
+	  			element = layui.element,
+	  			tree = layui.tree,
+				//树结构
+				/*let treeUrl= `${gdn}/navigationTableController/getNavigationTableAll`;
+				let treeData=""
+				let idUrl= `${gdn}/navigationTableController/QueryTheChildLevelAccordingToTheParentId`;	  			
+				$hou.GetApi(treeUrl,treeData,function(state,res){
+					if (state) {
+						layui.tree({
+						    elem: '.treeModel' //指定元素
+						    ,target: '_blank' //是否新选项卡打开（比如节点返回href才有效）
+						    ,click: function(item){ //点击节点回调
+							    var newId=item.id;
+							    addId=newId
+							    indexData={id:item.id};
+							    $hou.GetApi(idUrl,indexData,function(state,res){
+					      			if (state) {
+					      				//数据获取
+					      				let dataSize = res.result.length;//数据量
+								  		let datalimit = "5";
+								  		let datacurr = "1";
+										var gid="";
+								  		//写入表格数据
+								  		tableConfig.initTable('tpl-LoadStaffAll','tab_loadStaffAll',res.result);
+					      				//选择单个数据
+								  		$('.btn-lable').click(function(event) {
+									        var getid = $(this).siblings('input').attr('data-id'); //获取当前复选框的id
+									        if ($(this).siblings('input').attr('checked') == 'checked') { //判断选中状态
+									        	$(this).siblings('input').removeAttr('checked');
+										          //取消选中
+										        for (var i = 0; i < LoadStaffDeleteArr.length; i++) {
+										            if (LoadStaffDeleteArr[i] == getid) { //移除数组中当前id
+										            	LoadStaffDeleteArr.splice(i, 1);
+											        }
+										        }
+										    } else {
+										      	$(this).siblings('input').attr('checked', 'checked');
+										          //点击选中
+										          LoadStaffDeleteArr.push(getid);
+										    }
+										});
+										//多条数据删除
+										$('#tabAllDeleteMoreStaff').click(function(event) {
+											let url = `${gdn}/navigationTableController/deleteNavigationTableAll`;
+											let strids = '';
+											for (var i = 0; i < LoadStaffDeleteArr.length; i++) {
+												strids += LoadStaffDeleteArr[i]+',';
+											}
+											let data = {ids:strids.slice(0,-1)};
+											// let data = ids:LoadStaffDeleteArr;
+											$hou.GetApi(url,data,function(state,rces){
+												if (state) {
+													layer.alert('删除成功',{icon: 1}, function(index){
+														document.location.reload();
+													}); 
+												}else{
+													layer.open({
+														type: 0,
+														offset: 'auto',
+														id: 'nohttp',
+														content: '<div style="padding: 20px 100px;">删除失败，未连接到服务器</div>',
+														btn: '确认',
+														btnAlign: 'c',
+														shade: 0.5,
+														shadeClose:true,
+														yes: function() {
+															layer.closeAll();
+														}
+													});
+												}
+											});
+										});
+										
+									    //修改数据
+									    $('.loadAllStaffUpdata').click(function(event) {
+									    	gid=event.currentTarget.dataset.id;
+									    	//gid = $(this).attr('data-id');
+									    	let url = `${gdn}/navigationTableController/getNavigationTableById`;
+									    	let data = {id:gid};
+									    	$('.popupfixed').show();
+									    	
+									    	//请求数据
+									    	$hou.GetApi(url,data,function(state,res_Allstaff){
+									    		if(state){
+										    		var getTpl = $('#tpl-popAllStaff').html();
+										    		laytpl(getTpl).render(res_Allstaff.result, function(html) {
+										    			$('.popupfixed .p-container').html(html);
+										    		});
+										    		laydate.render({
+												   	 	elem: '#StaffAlldate'
+												  	}); 
+									    		}else{
+									    			layer.open({
+									                    type: 0,
+									                    offset: 'auto',
+									                    id: 'nohttp',
+									                    content: '<div style="padding: 20px 100px;">修改失败，未连接到服务器</div>',
+									                    btn: '确认',
+									                    btnAlign: 'c',
+									                    shade: 0.5,
+									                    shadeClose:true,
+									                    yes: function() {
+									                      layer.closeAll();
+									                    }
+									                });
+									    		}
+									    	});
+									    });			
+									
+									    $('#closepop').click(function(event) {
+									    	$('.popupfixed').hide();
+									    });									
+									    //提交popup数据
+							            $('#upAstaffData').click(function(event) {
+							            	//var upStaffAllId=$(this).index
+							                let url = `${gdn}/navigationTableController/upDataNavigationTableById`;
+							                let data = $('form[name=form_upAllStaff]').serialize();
+							                data += '&id='+gid;
+							                $hou.GetApi(url,data,function(state,res_upstate){
+							                  	if (state) {
+								                    $('.popupfixed').hide();
+								                    layer.msg('修改成功', {icon: 1,time: 1000},function(){
+								                      document.location.reload();
+								                    }); 
+							                  	}else{
+								                    layer.open({
+									                    type: 0,
+									                    offset: 'auto',
+									                    id: 'nohttp',
+									                    content: '<div style="padding: 20px 100px;">修改失败，未连接到服务器</div>',
+									                    btn: '确认',
+									                    btnAlign: 'c',
+									                    shade: 0.5,
+									                    shadeClose:true,
+									                    yes: function() {
+									                      layer.closeAll();
+									                    }
+								                  	});
+							                  	}
+							                });
+							            });
+					      			}else{
+										tableConfig.initTable('tpl-LoadStaffAll','tab_loadStaffAll',{name:"没有数据"});
+									}
+					      		})
+							}
+							,nodes: res.result
+						});
+						//选中全部数据
+					    tableConfig.setCheckbox('allStaff', 'selectAll',function(res) {
+					    	LoadStaffDeleteArr = res;
+					    });	
+						$("#addAstaffData").click(function(res){
+							let url = `${gdn}/navigationTableController/addNavigationTable`;
+						    let data = $('form[name=form_addAllStaff]').serialize();
+						    data.pid = addId;
+						    $hou.GetApi(url,data,function(state,res_upstate){
+							    if (state) {
+							        $('.addPopupfixed').hide();
+							        layer.msg('修改成功', {icon: 1,time: 1000},function(){
+							            document.location.reload();
+							        }); 
+							    }else{
+							        layer.open({
+							            type: 0,
+							            offset: 'auto',
+							            id: 'nohttp',
+							            content: '<div style="padding: 20px 100px;">修改失败，未连接到服务器</div>',
+							            btn: '确认',
+							            btnAlign: 'c',
+							            shade: 0.5,
+							            shadeClose:true,
+							            yes: function() {
+							            	layer.closeAll();
+							        	}
+							        });
+							    }
+							});
+						})
+					}else{
+						layer.open({
+							type: 0,
+							offset: 'auto',
+							id: 'nohttp',
+							content: '<div style="padding: 20px 100px;">连接服务器失败！稍后请重试</div>',
+							btn: '确认',
+							btnAlign: 'c',
+							shade: 0.5,
+							shadeClose:true,
+							yes: function() {
+								layer.closeAll();
+							}
+						});
+					}
+				});	*/  			
+			//}) 
+        },
+        computed:{
+        }
+	})    
+	</script>
+</body>
+
+</html>

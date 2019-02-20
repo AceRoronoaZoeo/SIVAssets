@@ -1,5 +1,4 @@
 /** layui-v2.4.5 MIT License By https://www.layui.com */
-/*标记*/
 .layui-inline, img {
 	display: inline-block;
 	vertical-align: middle
@@ -820,11 +819,7 @@ a cite {
 
 .layui-body {
 	position: absolute;
-<<<<<<< HEAD
-	left: 230px;
-=======
 	left: 200px;
->>>>>>> 93774cd370d146d424dec7b881f03bb85b5f83fa
 	right: 0;
 	top: 0;
 	bottom: 0;
@@ -832,8 +827,7 @@ a cite {
 	width: auto;
 	overflow: hidden;
 	overflow-y: auto;
-	box-sizing: border-box;
-	margin-bottom: 150px;
+	box-sizing: border-box
 }
 
 .layui-layout-body {
@@ -846,11 +840,7 @@ a cite {
 
 .layui-layout-admin .layui-side {
 	top: 60px;
-<<<<<<< HEAD
-	width: 230px;
-=======
 	width: 200px;
->>>>>>> 93774cd370d146d424dec7b881f03bb85b5f83fa
 	overflow-x: hidden
 }
 
@@ -1415,7 +1405,6 @@ a cite {
 	}
 
 }
-
 .layui-col-space1 {
 	margin: -.5px
 }
@@ -3513,7 +3502,7 @@ body .layui-table-tips .layui-layer-content {
 }
 
 .layui-nav * {
-	font-size: 12px
+	font-size: 14px
 }
 
 .layui-nav .layui-nav-item {
@@ -3533,14 +3522,14 @@ body .layui-table-tips .layui-layer-content {
 	transition: all .3s;
 	-webkit-transition: all .3s
 }
-/*顶部导航样式，标记*/
+
 .layui-nav .layui-this:after, .layui-nav-bar, .layui-nav-tree .layui-nav-itemed:after {
 	position: absolute;
 	left: 0;
 	top: 0;
 	width: 0;
 	height: 5px;
-	/*background-color: #5FB878;*/
+	background-color: #5FB878;
 	transition: all .2s;
 	-webkit-transition: all .2s
 }
@@ -3561,8 +3550,8 @@ body .layui-table-tips .layui-layer-content {
 }
 
 .layui-nav-img {
-	width: 20px;
-	height: 20px;
+	width: 30px;
+	height: 30px;
 	margin-right: 10px;
 	border-radius: 50%
 }
@@ -3630,23 +3619,10 @@ body .layui-table-tips .layui-layer-content {
 }
 
 .layui-nav-tree {
-<<<<<<< HEAD
-	width: 230px;
-=======
 	width: 200px;
->>>>>>> 93774cd370d146d424dec7b881f03bb85b5f83fa
 	padding: 0
 }
-.layui-side{
-	padding-bottom: 108px;
-<<<<<<< HEAD
-=======
-	background: #333333;
->>>>>>> 93774cd370d146d424dec7b881f03bb85b5f83fa
-}
-.layui-side::-webkit-scrollbar {/*滚动条整体样式*/
-    width: 2px;     /*高宽分别对应横竖滚动条的尺寸*/
-}
+
 .layui-nav-tree .layui-nav-item {
 	display: block;
 	width: 100%;
@@ -3665,16 +3641,16 @@ body .layui-table-tips .layui-layer-content {
 .layui-nav-tree .layui-nav-item a:hover {
 	background-color: #4E5465
 }
-/*左侧导航样式 标记*/
+
 .layui-nav-tree .layui-nav-bar {
 	width: 5px;
 	height: 0;
-	/*background-color: #009688*/
+	background-color: #009688
 }
 
 .layui-nav-tree .layui-nav-child dd.layui-this, .layui-nav-tree .layui-nav-child dd.layui-this a, .layui-nav-tree .layui-this, .layui-nav-tree .layui-this>a, .layui-nav-tree .layui-this>a:hover {
-	background-color: #00CCFF;
-	color: #fff;
+	background-color: #009688;
+	color: #fff
 }
 
 .layui-nav-tree .layui-this:after {

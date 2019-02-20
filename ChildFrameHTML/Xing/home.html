@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>首页</title>
+    <meta charset="utf-8">
+    <!-- 360极速模式 -->
+    <meta name="renderer" content="webkit">
+    <!-- 最新ie和谷歌优先渲染 -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <!-- 为移动设备添加 viewport -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <!-- 禁止缓存 -->
+    <meta http-equiv=”pragma” content=”no-cache”>
+    <meta http-equiv=”cache-control” content=”no-cache”>
+    <meta http-equiv=”expires” content=”0″>
+    
+    <link rel="stylesheet" href="../../layui/css/layui.css" media="all">
+    <link rel="stylesheet" href="css/home.css" media="all">
+    <link rel="stylesheet" href="css/media.css" media="all">
+</head>
+
+<body>
+    <div id="app">
+    	<div class="capitalBox">
+    		<ul>
+    			<li v-for="(item,index) in capital" :key="index" class="layui-col-md4 layui-col-sm4 layui-col-xs6">
+                    <img :src="item.img">   
+                    <p class="name">{{item.name}}</p>   
+                    <p class="num">{{item.num}}个/￥{{item.price}}</p>   
+                    <p class="text">{{item.text}}{{item.rentalQuantity}}</p>   
+                </li>
+    		</ul>
+    	</div>
+        <div class="echartBox">
+            <ul>
+                <li v-for="(item,index) in echart" :key="index" class="echartItem">
+                    <div class="echartTitle">
+                        <div class="spanBox">
+                            <span class="normalTitle">{{item.title}}</span>
+                            <span class="subTitle" v-if="item.subTitle!==''">{{item.subTitle}}</span>                            
+                        </div>
+                        <div class="echartTitle-right" v-if="item.titleType==0">
+                            <img src="../image/date.png">
+                            <div class="layui-form">
+                                <div class="layui-input-inline clearRight">
+                                    <input class="layui-input" id="test6" type="text" placeholder="">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="echartTitle-right" v-else-if="item.titleType==1">
+                            <a href="javascript:;">查看全部</a>
+                        </div>  
+                        <div class="echartTitle-right" v-else></div>                       
+                    </div>
+                    <div class="echartContent">
+                        <div class="echartContentBox">
+                            <div class="echartCont">
+                                <div class="barBox" v-for="(barItem,barIndex) in bar" :key="barIndex" v-if="item.titleType==1">
+                                    <span>{{barItem.name}}</span>
+                                    <div class="lineWidth">
+                                        <span :style="{maxWidth:barItem.lineWidth+'px'}"></span>
+                                    </div>
+                                    <span class="textMes">{{barItem.num}} / {{(barItem.num/sum*100).toFixed(2)}}%</span>
+                                </div>
+                            </div>
+                            <div class="echartTabBox" v-if="index==echart.length-1">
+                                <div class="aBox">
+                                    <a href="javascript:;" v-for="(echartTabItem,echartTabIndex) in echartTab" :key="echartTabIndex" @click="echartTabFn(echartTabIndex)" :class="{active:echartTabIndex==echartIndex}">{{echartTabItem.name}}</a>
+                                </div>
+                                <div class="echartTabText">
+                                    <ul>
+                                        <li>资产</li>
+                                        <li>数量</li>
+                                        <li>占比</li>
+                                    </ul>
+                                </div>
+                                <div class="echartTabList" v-for="(echartTabItem,echartTabIndex) in echartTab[echartIndex].tabList" :key="echartTabIndex">
+                                    <span>{{echartTabItem.tabAssets}}</span>
+                                    <span>{{echartTabItem.num}}</span>
+                                    <span>{{echartTabItem.percent}}</span>
+                                </div>
+                            </div>
+                        </div>                        
+                    </div>
+                </li>
+            </ul> 
+            <div class="echartOperationBox">
+                <div class="echartTitle">
+                    <div class="spanBox" style="align-items: unset">
+                        <a href="javascript:;" class="normalTitle">快捷操作</a>
+                        <a href="javascript:;" class="subTitle" style="height:unset;font-size:20px;">使用手册</a>                            
+                    </div>
+                </div>   
+                <div class="imgBox">
+                    <img src="../image/systemSetup.png" alt="">
+                    <span></span>
+                    <img src="../image/assetSetting.png" alt="">
+                </div>
+                <div class="echartOperationABox">      
+                    <div class="echartOperationList" v-for="(item,index) in echartOperationList" :key="index">
+                        <div class="list" v-for="(echartOperationListItem , echartOperationListIndex) in item.list" :key="echartOperationListIndex">
+                            <a :href="echartOperationListItem.href">{{echartOperationListItem.text}}</a>
+                            <div class="childSrc" v-if="echartOperationListItem.childSrc">
+                                <div class="iBox">
+                                    <i data-v-83c1ae6e class="right_i"></i>
+                                    <i data-v-83c1ae6e class="left_i"></i>                                    
+                                </div>
+                                <div class="echartOperationList" style="width:485px;position:absolute;right:60px;">
+                                    <div class="list newList">
+                                        <a :href="childSrcItem.href" v-for="(childSrcItem , childSrcIndex) in echartOperationListItem.childSrc" style="width:218px">{{childSrcItem.text}}</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>             
+                </div>              
+            </div>   
+        </div>
+                            
+    </div>
+    <script type="text/javascript" src="../public/js/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="../layui/layui.js"></script>
+    <script type="text/javascript" src="../public/js/echarts.min.js"></script>
+    <script type="text/javascript" src="../public/js/core.js"></script>
+    <script type="text/javascript" src="../public/js/vue.min.js"></script>
+	<script type="text/javascript">
+	let app=new Vue({
+        el:"#app",
+        data:{
+            screenWidth: document.body.clientWidth,
+            //capital 數據
+            capital:[
+                {img:"Assets/sumAssets.png",name:"总资产",num:0,price:2200,rentalQuantity:"2",text:"租赁台数："},
+                {img:"Assets/idleAssets.png",name:"闲置资产",num:0,price:0,rentalQuantity:"0%",text:"闲置资占比数："},
+                {img:"Assets/useAssets.png",name:"使用中资产",num:0,price:2000,rentalQuantity:"100%",text:"使用中资产资占比数："},
+                {img:"Assets/normalAssets.png",name:"正常资产",num:0,price:0,rentalQuantity:"0",text:"租赁台数："},
+                {img:"Assets/maintenanceAssets.png",name:"维修/遗失资产",num:0,price:0,rentalQuantity:"0%",text:"损坏资产占比数："},
+                {img:"Assets/deadAssets.png",name:"报废资产",num:0,price:0,rentalQuantity:"0%",text:"报废费产占比数："},
+            ],
+
+            //echart 數據
+            echart:[
+                {title:"资产数量",subTitle:"",titleType:0},
+                {title:"资产分类",subTitle:"",titleType:1},
+                {title:"资产分布",subTitle:"IT固定类资产",titleType:2,},
+            ],
+            echartTab:[
+                {
+                    name:"资产类别",
+                    tabList:[
+                        {
+                            tabAssets:"IT类固定资产",
+                            num:"2",
+                            percent:"100%"
+                        }
+                    ]
+                },
+                {
+                    name:"资产品牌",
+                    tabList:[
+                        {
+                            tabAssets:"测试",
+                            num:"1",
+                            percent:"50%"
+                        },
+                        {
+                            tabAssets:"京东",
+                            num:"1",
+                            percent:"50%"
+                        }                                
+                    ]                            
+                }
+            ],          
+            echartObj:"",
+            echartIndex:0,
+            echartOperationList:[
+                {
+                    list:[
+                        {text:"角色设置",href:"http://www.baidu.com"},
+                        {text:"管理员设置",href:"http://www.baidu.com"},
+                        {text:"组织架构设置",href:"http://www.baidu.com"}
+                    ]                 
+                },
+                {
+                    list:[
+                        {text:"资产入库",href:"http://www.baidu.com"},
+                        {text:"出库领用",href:"http://www.baidu.com"},
+                        {text:"资产转移",href:"http://www.baidu.com"},
+                        {text:"资产退库",href:"http://www.baidu.com"},
+                        {text:"资产维修",href:"http://www.baidu.com"},
+                        {text:"清理报废",href:"http://www.baidu.com"},                
+                        {text:"资产盘点",href:"http://www.baidu.com"},
+                        {text:"资产分析",href:"http://www.baidu.com"},
+                        {text:"资产管理推荐",href:"http://www.baidu.com",
+                            childSrc:[
+                                {text:"角色设置",href:"http://www.baidu.com"},
+                                {text:"管理员设置",href:"http://www.baidu.com"},
+                                {text:"组织架构设置",href:"http://www.baidu.com"}                    
+                            ]                            
+                        },
+                    ]                    
+                }             
+            ],
+            //bar 数据
+            sum:0,
+            bar:[
+                {name:"IT类固定资产",num:2,percent:"100%",lineWidth:0},
+                {name:"IT类固定资产",num:3,percent:"100%",lineWidth:0},
+                {name:"IT类固定资产",num:4,percent:"100%",lineWidth:0},
+            ]
+        },
+        methods:{   
+            echartTabFn(i){
+                this.echartIndex=i;
+                console.log(this.sum)
+                console.log(this.bar)
+            }      
+        },
+        mounted(){
+            window.onresize = () => {
+                return (() => {
+                    window.screenWidth = document.body.clientWidth
+                    this.screenWidth = window.screenWidth
+                })()
+            }
+        }, 
+        watch:{
+            screenWidth (val) {
+                this.screenWidth = val;
+                window.location.reload();
+            }
+        },
+        created(){
+            this.bar.forEach((item,i)=>{
+                this.sum+=item.num;
+            })
+            this.bar.forEach((item,i)=>{
+                item.lineWidth=parseInt(516*item.num/this.sum);
+            })   
+
+            layui.use(['laypage', 'layer', 'laytpl','element','laydate','upload'], function() {
+                let laypage = layui.laypage,
+                    layer = layui.layer,
+                    laytpl = layui.laytpl,
+                    laydate = layui.laydate;
+                let upload = layui.upload;
+                //日期范围
+                laydate.render({
+                    elem: '#test6'
+                    ,range: true
+                });
+
+                /*折线图*/
+                var lineChart = echarts.init(document.getElementsByClassName("echartCont")[0]);
+                lineOption = {
+                    tooltip: {
+                        trigger: 'axis'
+                    },
+                    legend: {
+                        data:['在用','闲置','报废','维修','遗失','总数']
+                    },
+                    grid: {
+                        left: '3%',
+                        right: '4%',
+                        bottom: '3%',
+                        containLabel: true
+                    },
+                    xAxis: {
+                        type: 'category',
+                        boundaryGap: false,
+                        data: ['2018-07','2018-08','2018-09','2018-10','2018-11','2018-12','2019-01']
+                    },
+                    yAxis: {
+                        type: 'value'
+                    },
+                    series: [
+                        {
+                            name:'在用',
+                            type:'line',
+                            data:[0,0,0,0,0,0,2]
+                        },
+                        {
+                            name:'闲置',
+                            type:'line',
+                            data:[0,0,0,0,0,0,0]
+                        },
+                        {
+                            name:'报废',
+                            type:'line',
+                            data:[0,0,0,0,0,0,0]
+                        },
+                        {
+                            name:'维修',
+                            type:'line',
+                            data:[0,0,0,0,0,0,0]
+                        },
+                        {
+                            name:'遗失',
+                            type:'line',
+                            data:[0,0,0,0,0,0,0]
+                        },
+                        {
+                            name:'总数',
+                            type:'line',
+                            data:[0,0,0,0,0,0,2]
+                        }
+                    ]
+                };
+                lineChart.setOption(lineOption, true);  
+
+
+                //饼状图
+                var pieChart = echarts.init(document.getElementsByClassName("echartCont")[2]);
+                pieOption = {
+                    series: [
+                        {
+                            name:'访问来源',
+                            type:'pie',
+                            selectedMode: 'single',
+                            radius: [0, '40%'],
+                            label: {
+                                normal: {
+                                    position: 'inner'
+                                }
+                            },
+                            labelLine: {
+                                normal: {
+                                    show: false
+                                }
+                            },
+                            data:[
+                                {value:335, name:'IT类固定资产'},
+                            ]
+                        },
+                        {
+                            name:'访问来源',
+                            type:'pie',
+                            radius: ['60%', '90%'],
+                            data:[
+                                {value:335, name:'测试'},
+                                {value:310, name:'京东'},
+                            ]
+                        }
+                    ]
+                };
+                pieChart.setOption(pieOption, true);             
+            })
+            
+        },
+        computed:{
+        }
+	})    
+	</script>
+</body>
+
+</html>

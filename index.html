@@ -1,178 +1,313 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-  <meta charset="utf-8">
-  <title>我的后台管理</title>
-  <meta name="renderer" content="webkit">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <link rel="stylesheet" href="layui/css/layui.css" media="all">
-  <link rel="stylesheet" href="public/css/index.css" media="all">
+    <title>我的后台管理</title>
+    <meta charset="utf-8">
+    <!-- 360极速模式 -->
+    <meta name="renderer" content="webkit">
+    <!-- 最新ie和谷歌优先渲染 -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <!-- 为移动设备添加 viewport -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <!-- 禁止缓存 -->
+    <meta http-equiv=”pragma” content=”no-cache”>
+    <meta http-equiv=”cache-control” content=”no-cache”>
+    <meta http-equiv=”expires” content=”0″>
+    <link rel="stylesheet" href="layui/css/layui.css" media="all">
+    <link rel="stylesheet" href="css/Allscrollbar.css" media="all">
+    <link rel="stylesheet" href="css/index.css" media="all">
+    <style type="text/css">
+
+    </style>
 </head>
+
 <body>
-  <div class="layui-layout layui-layout-admin">
+  <div class="layui-layout layui-layout-admin" id="indexApp">
     <!-- header -->
-    <div class="layui-header header header-demo" style="height: auto;">
-      <div class="layui-main">
-        <div class="fleft">
-          <div class="zdy-logo">
-            <div class="logo-cont">
-              <a class="logo zdy-logo logo-text" href="javascript:;" >
-                <img src="" alt="logo" style="width: 100px;height: 40px;margin-right: 10px" id="logo_img">
-                <span id="company_name"></span>
-                <span class="layui-badge badge">已认证</span>
-              </a>
-            </div>
-          </div>
+    <div class="layui-header header header-demo" style="background: #393d49;">
+      <div class="layui-main dis-head" style="margin: 0px 5px;">
+        <a href="javascript:;" class="logo"><img src="image/useAssets.png" alt=""></a>
+        <div class="dis-head">
+          <label class="company-name">天峰酷钉科技有限公司</label>
+          <a href="javascript:;" class="layui-btn layui-btn-warm layui-btn-xs">已认证</a>
         </div>
-        <div class="fright">
-          <ul class="layui-nav">
-            <li class="layui-nav-item">
-              <a href="">
-                <img src="image/topnav/notice.png" height="20" width="20" class="layui-nav-img">通知
-                <!-- <span class="layui-badge badge">9</span> -->
-              </a>
-            </li>
-            <li class="layui-nav-item">
-              <a href="">
-                <img src="image/topnav/advisory.png" height="20" width="20" class="layui-nav-img">在线咨询
-              </a>
-            </li>
-            <li class="layui-nav-item">
-              <a href="">
-                <img src="image/topnav/guide.png" height="20" width="20" class="layui-nav-img">使用指南
-              </a>
-            </li>
-            <li class="layui-nav-item">
-              <a href="">
-                <img src="image/topnav/phone.png" height="20" width="20" class="layui-nav-img">电话咨询：40019388434
-              </a>
-            </li>
-            <li class="layui-nav-item">
-              <a href="javascript:;">
-                <!-- <img src="image/topnav/user.png" height="18" width="18" class="layui-nav-img">用户账户 -->
-                <img src="" height="75" width="75" class="layui-nav-img" id="headimg">
-                <span id="myname"></span>
-              </a>
-              <dl class="layui-nav-child">
-                <dd><a href="javascript:;">修改信息</a></dd>
-                <dd><a href="javascript:;">安全管理</a></dd>
-                <dd><a href="javascript:;" id="OutLogin">退出</a></dd>
-              </dl>
-            </li>
-          </ul>
-        </div>
-        <div  style="clear:both;"></div>
+        <ul class="layui-nav nav-myset">
+          <li class="layui-nav-item">
+            <a href="javascript:;" :data-isrc="1" v-on:click="changeIframeSrc"><i class="layui-icon">&#xe667;</i>通知</a>
+          </li>
+          <li class="layui-nav-item">
+            <a href="javascript:;" :data-isrc="2" v-on:click="changeIframeSrc"><i class="layui-icon">&#xe63a;</i>在线咨询</a>
+          </li>
+          <li class="layui-nav-item">
+            <a href="javascript:;" :data-isrc="3" v-on:click="changeIframeSrc"><i class="layui-icon">&#xe60a;</i>使用指南</a>
+          </li>
+          <li class="layui-nav-item">
+            <a href="javascript:;" :data-isrc="4" v-on:click="changeIframeSrc"><img src="image/topnav/phone.png" alt="">电话咨询:40019388434</a>
+          </li>
+          <li class="layui-nav-item">
+            <a href="javascript:;" :data-isrc="5" v-on:click="changeIframeSrc"><i class="layui-icon">&#xe66f;</i>用户账户</a>
+          </li>
+        </ul>
       </div>
     </div>
     <!-- aside -->
-    <div class="layui-side">
-      <ul class="layui-nav layui-nav-tree layui-inline"  style="margin-right: 10px;" id="nav_list">
-        <script type="text/html" id="tpl-nav">
-          {{# for (var i=0;i<d.data.length;i++) { }}
-          {{# if(d.data[i].navtype==0){ }}
-          <li class="layui-nav-item navLI">
-            <a href="javascript:;" 
-            data-url="{{d.data[i].pages}}" 
-            data-title="{{d.data[i].navTitle}}"  
-            data-id="{{d.data[i].id}}" 
-            class="site-demo-active"
-            data-type="tabAdd">
-              <img src="{{ d.data[i].navImg}}" alt="" class="navIMG">
-              {{d.data[i].navTitle}}
-            </a>
-          </li>
-          {{# }else{ }}
-          <li class="layui-nav-item navLI">
-            <a href="javascript:;"  class="navTitle">
-              <img src="{{ d.data[i].navImg}}" alt="" class="navIMG">
-              {{ d.data[i].navTitle}}
-            </a>
-            <dl class="layui-nav-child">
-              {{#  layui.each(d.data[i].navChaild, function(index, item){ }}
-              {{# if(item.type==1){ }}
-              <dd>
-                <a href="javascript:;" 
-                data-url="{{item.pages}}" 
-                data-title="{{item.navName}}"  
-                data-id="{{item.id}}" 
-                class="site-demo-active" 
-                data-type="tabAdd"
-                style="text-align: center;"
-                >{{item.navName}}</a>
-              </dd>
-              {{# }else{ }}
-              <dd><a href="{{item.pages}}">{{item.navName}}</a></dd>
-              {{# } }}
-              {{#  }); }}
-            </dl>
-          </li>
-          {{# } }}
-          {{# } }}
-        </script>
-      </ul>
-      <div class="service">
-        <div class="s-top">
-            <div class="s-top-left">
-                <img src="image/leftnav/service.png" alt="">
-            </div>
-            <div class="s-top-right">
-                <p>客户支持</p>
-                <p>电话咨询：40018374844</p>
-            </div>
+    <div class="layui-side layui-bg-black dis-head asid-column" id="thisaside">
+        <ul class="layui-nav layui-nav-tree layui-inline nav-reset" style="margin-right: 10px;" v-html="navstr">
+        </ul>
+        <div class="asid-fooder dis-head asid-column jc-center">
+          <div class="dis-head af-top">
+            <div style="flex: 1"><img src="image/系统/首页/导航栏/客服.png" width="48" alt=""></div>
+            <div style="flex: 1">
+              <div class="cust-help">客户支持</div>
+              <div class="call-me">电话咨询:40018374844</div>
+            </div> 
+          </div>
+
+          <div class="af-top call-me">
+            工作时间：周一至周日 8:30-18:00
+          </div>  
         </div>
-        <div class="s-bottom">
-            <p>工作时间：周一至周日 08:30-18:00</p>  
-        </div>
-      </div>
     </div>
     <!-- content -->
     <div class="layui-tab layui-tab-brief" lay-filter="demoTitle">
-      <div class="layui-body layui-tab-content site-demo site-demo-body" style="bottom: 0">
-        <div class="layui-tab" lay-filter="demo" lay-allowclose="true">
-          <ul class="layui-tab-title" id="tabTitleCont">
-
-          </ul>
-          <div class="layui-tab-content" id="tabFrameCont">
-
-          </div>
+        <div class="layui-body site-demo site-demo-body" style="bottom: 0" id="thisContent">
+            <iframe :src="iframeSrc"></iframe>
         </div>
-      </div>
-      <!-- fooder -->
-      <!-- <div class="layui-footer footer footer-demo">
-      </div> -->
     </div>
-    <script type="text/javascript" src="public/js/jquery-3.2.1.min.js"></script>
-    <script type="text/javascript" src="layui/layui.js"></script>
-    <script type="text/javascript" src="public/js/core.js"></script>
-    <script type="text/javascript" src="public/js/index.js"></script>
-
-    <script type="text/javascript">
-      $(document).ready(function() {
-        let data = '';
-        //数据获取
-        GetNav(function(res) {
-          data = res;
+  </div>
+<!-- popup -->
+<!-- <div class="popupfixed" style="display: none;" id="popup_block">
+    <div class="p-relativecont">
+        <div class="layui-layer layui-layer-dialog p-absolutecont" style="left: 50%;top: 50%;transform: translate(-50%,-50%);">
+            <div class="layui-layer-title">
+                <span id="pop_title"></span>
+                <span class="layui-layer-setwin"><a class="layui-layer-ico layui-layer-close layui-layer-close1" href="javascript:;" id="closepop"></a></span>
+            </div>
+            <div class="layui-layer-content" id="pop_Content" style="max-height: 300px;overflow-y: auto;">
+            </div>
+            <div class="layui-layer-btn layui-layer-btn-c">
+                <a class="layui-btn layui-btn-primary" id="whitebtn" style="height: 30px;">取消</a>
+                <a class="layui-layer-btn0"  id="universalbtn">确认</a>
+            </div>
+        </div>
+    </div>
+</div> -->
+  <script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
+  <!-- <script type="text/javascript" src="https://g.alicdn.com/dingding/dingtalk-pc-api/2.7.0/index.js"></script> -->
+  <script type="text/javascript" src="layui/layui.js"></script>
+  <script type="text/javascript" src="js/vue.min.js"></script>
+  <script type="text/javascript" src="js/jquery-hou-main.js"></script>
+  <script type="text/javascript">
+    var obj = null;
+    $(document).ready(function() {
+      layui.use(['element','layer'],function(){
+        let ele = layui.element;
+        let app = new Vue({
+          el:'#indexApp',
+          data:{
+            indexObj:{
+              userName:'test',
+              userID:'test',
+              position:'test'
+            },
+            iframeSrc:'ChildFrameHTML/home.html',//默认页面
+            nav:[
+              { name:'首页', src:'ChildFrameHTML/home.html',id:0, child:[]},
+              { name:'资产管理', src:'test',id:1, 
+                child:[
+                  {name:'酒店餐饮',src:'test',id:2,child:[]},
+                  {name:'交通运输',src:'test',id:3,
+                    child:[
+                      {name:'交通',src:'test',id:4,child:[]},
+                      {name:'运输',src:'test',id:5,child:[
+                        {name:'空运',src:'test',id:15,child:[
+                          {name:'直升机',src:'test',id:18,child:[]},
+                          {name:'运输机',src:'test',id:19,child:[]},
+                        ]},
+                        {name:'陆运',src:'test',id:16,child:[]},
+                        {name:'海运',src:'test',id:17,child:[]}
+                      ]}
+                    ]},
+                  {name:'交通运输',src:'test',id:3,
+                    child:[
+                      {name:'交通',src:'test',id:4,child:[]},
+                      {name:'运输',src:'test',id:5,child:[
+                        {name:'空运',src:'test',id:15,child:[
+                          {name:'直升机',src:'test',id:18,child:[]},
+                          {name:'运输机',src:'test',id:19,child:[]},
+                        ]},
+                        {name:'陆运',src:'test',id:16,child:[]},
+                        {name:'海运',src:'test',id:17,child:[]}
+                      ]}
+                  ]},
+                  {name:'酒吧KTV',src:'test',id:6,child:[]},
+                  {name:'煤矿金属',src:'test',id:7,child:[]}
+              ]},
+              { name:'系统设置', src:'test',id:8, 
+                child:[
+                  {name:'音频设置',src:'test',id:9,child:[]},
+                  {name:'音频设置',src:'test',id:10,
+                    child:[
+                      {name:'左声道',src:'test',id:11,child:[]},
+                      {name:'右声道',src:'test',id:12,child:[]}
+                    ]},
+                  {name:'酒吧KTV',src:'test',id:13,child:[]},
+                  {name:'煤矿金属',src:'test',id:14,child:[]}
+              ]},
+            ],
+            navstr:'',//导航栏
+          },
+          created:function(){
+            this.getNav(this.nav);
+            // console.log(this.navstr)
+          },
+          mounted:function(){
+            ele.render();
+            let that = this;
+            $('.linkFrame').click(function(event) {
+              that.iframeSrc = $(this).attr('data-isrc');
+              // console.log($(this).attr('data-isrc'))
+            });
+          },
+          methods:{
+            //侧边栏之外的跳转
+            changeIframeSrc:function(e){
+              this.iframeSrc = e.target.dataset.isrc;
+            },
+            //获取侧边栏
+            getNav:function(arr){
+              for (var i = 0; i < arr.length; i++) {
+                var liEle = document.createElement('li');
+                liEle.className = 'layui-nav-item';
+                // let item = '<a href="javascript" data-isrc="'+arr[i].src+'" data-id="'+arr[i].id+'">arr[i].name</a>';
+                if(arr[i].child.length!=0){
+                  liEle.innerHTML = '<a href="javascript:;" data-isrc="'+arr[i].src+'" data-id="'+arr[i].id+'">'+arr[i].name+'</a>';  
+                  var lisDlEle = document.createElement('dl');
+                  lisDlEle.className = 'layui-nav-child';
+                  this.getNavChild(arr[i].child,lisDlEle);
+                  liEle.appendChild(lisDlEle);
+                }else{
+                  liEle.innerHTML = '<a href="javascript:;" data-isrc="'+arr[i].src+'" data-id="'+arr[i].id+'" class="linkFrame">'+arr[i].name+'</a>';
+                }
+                // console.log(liEle.innerHTML)
+                this.navstr+=this.domToString(liEle);
+              }
+            },
+            //侧边无限级子栏目
+            getNavChild:function(arr,dlElement){
+              for (var i = 0; i < arr.length; i++) {
+                var ddEle = document.createElement('dd');
+                if(arr[i].child.length!=0){
+                  ddEle.innerHTML = '<a href="javascript:;" data-isrc="'+arr[i].src+'" data-id="'+arr[i].id+'">'+arr[i].name+'</a>';
+                  var dlEle = document.createElement('dl');
+                  dlEle.className = 'layui-nav-child';
+                  ddEle.appendChild(dlEle);
+                  this.getNavChild(arr[i].child,dlEle);
+                }else{
+                  ddEle.innerHTML = '<a href="javascript:;" data-isrc="'+arr[i].src+'" data-id="'+arr[i].id+'" class="linkFrame">'+arr[i].name+'</a>';
+                }
+                dlElement.append(ddEle);
+              }
+            },
+            //dom转换成String
+            domToString:function (doms) {  
+              let tmpNode = document.createElement('div')
+              tmpNode.appendChild(doms) 
+              let str = tmpNode.innerHTML
+              tmpNode = doms = null; // 解除引用，以便于垃圾回收  
+              return str;  
+            }
+          },
         });
-        //设置导航栏
-        $hou.setAsideNav(data);
-        //设置公司名称和logo
-        $hou.initConfig({
-          CompanyName:'广州天峰酷钉科技股份有限公司',
-          HeadImg:'image/imge.jpg',
-          Logo:'image/logo.png',
-          HideLogo:true
-        });
-        //设置头像
-        // $hou.setHeadImg('image/imge.jpg');
-        //设置名字
-        // $hou.setMyName('陈某人');
-        //隐藏logo
-        // $hou.hideLogo();
-        //设置默认首页信息 参数 url,id,title
-        $hou.setDefaultHome(data.data[0].pages,data.data[0].id,data.data[0].navTitle);
+        obj = app;
       });
-    </script>
-  </body>
+    });
+              //获取code
+              // $(document).ready(function() {            
+              //     layui.use(['layer','element'], function() {
+              //         var layer = layui.layer,element = layui.element;
+              //         var loadAnim = layer.load();
+              //         var gdn = getDomainName();
+              //     //请求code
+              //     DingTalkPC.runtime.permission.requestAuthCode({
+              //         corpsrc:'test',Id: "dingdbadd1f3abdc696235c2f4657eb6378f", //企业ID 
+              //         onSuccess: function(result) {
+              //             let data = { authCode: result.code };
+              //             RequestPersonData(data);
+              //         },
+              //         onFail: function(err) {
+              //             //获取code失败 跳转页面 -不可返回
+              //             layer.close(loadAnim);
+              //             layer.msg('错误8888，请联系管理员！', {icon: 2,time:1500}, function(){
+              //               location.replace('error.html');
+              //             });  
+              //         }
+              //     });
+              //     //请求个人信息
+              //     function RequestPersonData(data) {
+              //         const url = `${gdn}/homeController/getUserInformation`;
+              //         $hou.GetApi(url, data, function(state, res) {
+              //             if (state) {
+              //                 index_config.setHeadImg(res.result.avatar);
+              //                 index_config.setMyName(res.result.userName);
+              //                 index_config.setMyPosition(res.result.position);
+              //                 index_config.setMyGroup(res.result.userDepartment);
+              //                 index_config.users = res.result;
+              //                 // $hou.clearLs();
+              //                 userData = res.result;
+              //                 setNavAside(res.result.userId);
+              //                 // GetNav(function(res){
+              //                 //     // setNavAside(res.result.userId);
+              //                 //     index_config.setAsideNav(res);
+              //                 //     index_config.setDefaultHome(res.result[0].pages, res.result[0].id, res.result[0].navTitle);
+              //                 //     index_config.initAside();
+              //                 //     layer.closeAll();
+              //                 // });
+              //                 // layer.closeAll();
+              //                 // setNavAside(res.result.userId);
+              //             } else {
+              //                 layer.closeAll();
+              //                 layer.msg(res.code,{icon:2,time:1500});
+              //             }
+              //         });
+              //     }
+              //     //请求导航栏信息
+              //     function setNavAside(userid){
+              //         let data = {usersrc:'test',Id:userid};
+              //         let url = `${gdn}/navigationTableController/getUserNavAll`;
+              //         $hou.GetApi(url,data,function(state,res){
+              //             if (state) { 
+              //                 // console.log(res);
+              //                 //设置导航栏
+              //                 index_config.setAsideNav(res);
+              //                 //设置默认首页信息 参数 url,id,title
+              //                 index_config.setDefaultHome(res.result[0].pages, res.result[0].id, res.result[0].navTitle);
+              //                 //加载页面侧边栏和Tab配置
+              //                 index_config.initAside();
+              //                 //
+              //                 layer.closeAll();
+              //             }else{
+              //                 layer.close(loadAnim);
+              //                 layer.msg('您没有操作权限，请联系管理员！', {icon: 2,time:1500}, function(){
+              //                   location.replace('error.html');
+              //                 });  
+              //             }
+              //         });
+              //     }
+              //     index_config.initNav({
+              //         CompanyName: '荣信人事后台管理系统'
+              //     });
+              //     //隐藏logo
+              //     index_config.hideLogo();
+              //     //回调用户信息
+              //     function ResultUser(user){
+              //         let users = userData;
+              //         user(users);
+              //     }
+              // }); 
+  // });
+  </script>
+</body>
 
-  </html>
+</html>

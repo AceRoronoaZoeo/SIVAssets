@@ -16,8 +16,9 @@
     <meta http-equiv=”expires” content=”0″>
     
     <link rel="stylesheet" href="../layui/css/layui.css" media="all">
-    <link rel="stylesheet" href="../css/home.css" media="all">
-    <link rel="stylesheet" href="../css/media.css" media="all">
+    <link rel="stylesheet" href="../css/Allscrollbar.css" media="all">
+    <!-- <link rel="stylesheet" href="../css/home.css" media="all">
+    <link rel="stylesheet" href="../css/media.css" media="all"> -->
 </head>
 
 <body>
@@ -119,11 +120,10 @@
         </div>
                             
     </div>
-    <script type="text/javascript" src="../public/js/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="../js/jquery-3.2.1.min.js"></script>
     <script type="text/javascript" src="../layui/layui.js"></script>
-    <script type="text/javascript" src="../public/js/echarts.min.js"></script>
-    <script type="text/javascript" src="../public/js/core.js"></script>
-    <script type="text/javascript" src="../public/js/vue.min.js"></script>
+    <script type="text/javascript" src="../js/echarts.min.js"></script>
+    <script type="text/javascript" src="../js/vue.min.js"></script>
 	<script type="text/javascript">
 	let app=new Vue({
         el:"#app",
@@ -232,6 +232,7 @@
             }
         },
         created(){
+            console.log(parent.obj.indexObj)
             this.bar.forEach((item,i)=>{
                 this.sum+=item.num;
             })
